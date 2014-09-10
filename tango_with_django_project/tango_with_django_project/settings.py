@@ -26,6 +26,15 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# Template directory
+
+TEMPLATE_DIRS = [os.path.join(BASE_DIR,'templates')]
+
+# Static content dir
+
+STATICFILES_DIRS = [os.path.join(BASE_DIR,'static')]
+
+STATIC_URL = '/static/'
 
 # Application definition
 
