@@ -34,8 +34,6 @@ TEMPLATE_DIRS = [os.path.join(BASE_DIR,'templates')]
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR,'static')]
 
-STATIC_URL = '/static/'
-
 # Media dirs
 
 MEDIA_URL = '/media/'
