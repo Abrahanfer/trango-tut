@@ -3,6 +3,8 @@ from django.db import models
 # Create your models here.
 class Category(models.Model):
     name = models.CharField(max_length=128, unique=True)
+    views = models.IntegerField(default=0)
+    likes = models.IntegerField(default=0)
 
     def _str_(self):
         return self.name
@@ -12,6 +14,10 @@ class Page(models.Model):
     title = models.CharField(max_length=128)
     url = models.URLField()
     views = models.IntegerField(default=0)
+
+    def category_name(self):
+        return self.category.name
+    category_name.short_description = 'Category'
 
     def _str_(self):
         return self.title
