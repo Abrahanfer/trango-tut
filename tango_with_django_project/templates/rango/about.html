@@ -11,7 +11,7 @@
     <body>
         <h1>Rango says...</h1>
         hello about page! <strong>{{ aboutmessage }}</strong><br />
-        <a href="/rango/">About</a><br />
+        <a href="{% url 'rango:index' %}">About</a><br />
          <img src="{% static "stalin.jpg" %}" alt="Picture of a great leader" />
     </body>
 

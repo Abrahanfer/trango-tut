@@ -41,7 +41,8 @@
     "fields": {
       "title": "Learn Python in 10 Minutes",
       "url": "http://www.korokithakis.net/tutorials/python/",
-      "category": 1
+      "category": 1,
+      "views": 23
     }
   },
   {
@@ -50,7 +51,8 @@
     "fields": {
       "title": "Official Django Tutorial",
       "url": "https://docs.djangoproject.com/en/1.5/intro/tutorial01/",
-      "category": 2
+      "category": 2,
+      "views": 98
     }
   },
   {
@@ -59,7 +61,8 @@
     "fields": {
       "title": "Django Rocks",
       "url": "http://www.djangorocks.com/",
-      "category": 2
+      "category": 2,
+      "views": 45
     }
   },
   {
@@ -68,7 +71,8 @@
     "fields": {
       "title": "How to Tango with Django",
       "url": "http://www.tangowithdjango.com/",
-      "category": 2
+      "category": 2,
+      "views": 56
     }
   },
   {
@@ -86,7 +90,8 @@
     "fields": {
       "title": "Bottle",
       "url": "http://bottlepy.org/docs/dev/",
-      "category": 9
+      "category": 9,
+      "views": 23
     }
   },
   {
@@ -95,7 +100,8 @@
     "fields": {
       "title": "Flask",
       "url": "http://flask.pocoo.org",
-      "category": 9
+      "category": 9,
+      "views": 45
     }
   }
 ]

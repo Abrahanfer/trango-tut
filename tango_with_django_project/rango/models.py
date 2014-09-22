@@ -9,6 +9,14 @@ class Category(models.Model):
     def _str_(self):
         return self.name
 
+    @staticmethod
+    def encode(name):
+        return name.replace(' ', '_')
+
+    @staticmethod
+    def decode(name):
+        return name.replace('_', ' ')
+
 class Page(models.Model):
     category = models.ForeignKey(Category)
     title = models.CharField(max_length=128)

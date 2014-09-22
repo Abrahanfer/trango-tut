@@ -8,7 +8,8 @@ urlpatterns = patterns('',
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^rango/', include('rango.urls')), # ADD THIS NEW TUPLE!
+    url(r'^rango/', include('rango.urls', namespace='rango')), # ADD
+                       # THIS NEW TUPLE!
 )
 
 if settings.DEBUG:
