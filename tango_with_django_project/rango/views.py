@@ -57,7 +57,7 @@ def category(request, category_name_url):
     # rendering engine. We start by containing the name of the
     # category passed by the user.
     context_dict = {'category_name': category_name}
-
+    context_dict['category_name_url'] = category_name_url
     try:
         # Can we find a category with the given name?
         # If we can't, the .get() method raises a DoesNotExist
@@ -112,7 +112,7 @@ def add_category(request):
 
 def add_page(request, category_name_url):
 
-    category_name = decode_url(category_name_url)
+    category_name = Category.decode(category_name_url)
     if request.method == 'POST':
         form = PageForm(request.POST)
 
@@ -140,7 +140,7 @@ def add_page(request, category_name_url):
             # Now that the page is saved, display the category instead.
             return category(request, category_name_url)
         else:
-            print form.errors
+            print(form.errors)
     else:
         form = PageForm()
 
