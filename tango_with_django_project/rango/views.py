@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
 from rango.models import Category
 from rango.models import Page
 from rango.forms import CategoryForm
@@ -11,6 +12,7 @@ from rango.forms import UserForm, UserProfileForm
 
 # Create your views here.
 def index(request):
+    request.session.set_test_cookie()
     # Request the context of the request.
     # The context contains information such as the client's machine details, for example.
     #context = RequestContext(request)
@@ -155,6 +157,9 @@ def add_page(request, category_name_url):
 
 
 def register(request):
+    if request.session.test_cookie_worked():
+        print(">>>> TEST COOKIE WORKED!")
+    request.session.delete_test_cookie()
     # Like before, get the request's context.
     #context = RequestContext(request)
 
@@ -256,11 +261,7 @@ def user_login(request):
 
 @login_required
 def restricted(request):
-    return render(request, 'rango/restricted.html', {
-        'restricted_msg':  "Since you're logged in, you can see this
-        text!" })
-
-from django.contrib.auth import logout
+    return render(request, 'rango/restricted.html', {'restricted_msg':  "Since you're logged in, you can see this text!" })
 
 # Use the login_required() decorator to ensure only those logged in
 # can access the view.
