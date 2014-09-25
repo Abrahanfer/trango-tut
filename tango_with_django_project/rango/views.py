@@ -64,8 +64,12 @@ def index(request):
 def about(request):
     #context = RequestContext(request)
     # NOT ANYMORE WITH RENDER
-
-    context_dictionary = {'aboutmessage': "Stalin el mejón"}
+    if request.session.get('visits'):
+        count = request.session.get('visits')
+    else:
+        count = 0
+    about_string = "Stalin es el mejon. Repitelo " + str(count) + " veces"
+    context_dictionary = {'aboutmessage': about_string }
 
     return render(request, 'rango/about.html', context_dictionary)
 
