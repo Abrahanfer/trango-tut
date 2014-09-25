@@ -27,18 +27,18 @@
              <ul class="nav pull-right">
                {% if user.is_authenticated %}
                <li class="navbar-text">Welcome, {{ user.username }}!</li>
-                    <li><a href="{% url 'rango:logout' %">Logout</a></li>
-                    {% else %}
-               <li><a href="{% url 'rango:register' %">Register</a></li>
-                    <li><a href="{% url 'rango:login' %">Login</a></li>
-                    {% endif %}
+               <li><a href="{% url 'rango:logout' %}">Logout</a></li>
+               {% else %}
+               <li><a href="{% url 'rango:register' %}">Register</a></li>
+               <li><a href="{% url 'rango:login' %}">Login</a></li>
+               {% endif %}
              </ul>
              <ul class="nav">
                {% if user.is_authenticated %}
-               <li><a href="{% url 'rango:restricted' %">Restricted</a></li>
-               <li><a href="{% url 'rango:add_category' %">Add Category</a></li>
+               <li><a href="{% url 'rango:restricted' %}">Restricted</a></li>
+               <li><a href="{% url 'rango:add_category' %}">Add Category</a></li>
                {% endif %}
-               <li><a href="{% url 'rango:about' %">About</a></li>
+               <li><a href="{% url 'rango:about' %}">About</a></li>
              </ul>
            </div>
            <!--/.nav-collapse -->
