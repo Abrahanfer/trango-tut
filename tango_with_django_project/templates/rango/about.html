@@ -2,15 +2,12 @@
 
 {% load staticfiles %}
 
-<html>
-
-    <head>
-        <title>Rango's About</title>
-    </head>
 {% block title %}Rango's About{% endblock %}
 {% block body_block %}
-    <h1>Rango says...</h1>
-    hello about page! <strong>{{ aboutmessage }}</strong><br />
+    <div class="hero-unit">
+      <h1>Rango says...</h1>
+      hello about page! <strong>{{ aboutmessage }}</strong><br />
 
-    <img src="{% static "stalin.jpg" %}" alt="Picture of a great leader" />
+      <img src="{% static "stalin.jpg" %}" alt="Picture of a great leader" />
+    </div>
 {% endblock %}
