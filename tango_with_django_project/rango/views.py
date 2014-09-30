@@ -11,6 +11,14 @@ from rango.forms import CategoryForm
 from rango.forms import PageForm
 from rango.forms import UserForm, UserProfileForm
 
+#helper function to get category list
+def get_category_list():
+    category_list = Category.objects.order_by('-likes')
+    for category in category_list:
+        category.url = Category.encode(category.name)
+
+    return category_list
+
 # Create your views here.
 def index(request):
     # Request the context of the request.
@@ -25,8 +33,9 @@ def index(request):
     # passed to the template engine.
     category_list = Category.objects.order_by('-likes')[:5]
     page_list = Page.objects.order_by('-views')[:5]
-    context_dict = {'categories': category_list, 'pages': page_list}
-
+    cat_list = get_category_list()
+    context_dict = {'categories': category_list, 'pages': page_list,
+                    'cat_list': cat_list}
     # The following two lines are new.
     # We loop through each category returned, and create a URL
     # attribute. This attribute stores an encoded URL (e.g. spaces
@@ -68,8 +77,10 @@ def about(request):
         count = request.session.get('visits')
     else:
         count = 0
-    about_string = "Stalin es el mejon. Repitelo " + str(count) + " veces"
-    context_dictionary = {'aboutmessage': about_string }
+    about_string = "Stalin es el mejon. Repitelo " + str(count) + "veces"
+    cat_list = get_category_list()
+    context_dictionary = {'aboutmessage': about_string, 'cat_list':
+                          cat_list }
 
     return render(request, 'rango/about.html', context_dictionary)
 
@@ -87,7 +98,9 @@ def category(request, category_name_url):
     # Create a context dictionary which we can pass to the template
     # rendering engine. We start by containing the name of the
     # category passed by the user.
-    context_dict = {'category_name': category_name}
+    cat_list = get_category_list()
+    context_dict = {'category_name': category_name, 'cat_list':
+                    cat_list }
     context_dict['category_name_url'] = category_name_url
     try:
         # Can we find a category with the given name?
@@ -177,9 +190,11 @@ def add_page(request, category_name_url):
     else:
         form = PageForm()
 
+    cat_list = get_category_list()
     return render(request, 'rango/add_page.html',
             {'category_name_url': category_name_url,
-             'category_name': category_name, 'form': form})
+             'category_name': category_name, 'cat_list': cat_list,
+             'form': form})
 
 
 def register(request):
@@ -236,16 +251,17 @@ def register(request):
         user_form = UserForm()
         profile_form = UserProfileForm()
 
+    cat_list = get_category_list()
     # Render the template depending on the context.
     return render(request,
             'rango/register.html',
             {'user_form': user_form, 'profile_form': profile_form,
-             'registered': registered})
+             'registered': registered, 'cat_list': cat_list })
 
 def user_login(request):
     # Like before, obtain the context for the user's request.
     #context = RequestContext(request)
-
+    cat_list = get_category_list()
     # If the request is a HTTP POST, try to pull out the relevant information.
     if request.method == 'POST':
         # Gather the username and password provided by the user.
@@ -280,11 +296,15 @@ def user_login(request):
     else:
         # No context variables to pass to the template system, hence the
         # blank dictionary object...
-        return render(request, 'rango/login.html', {})
+        return render(request, 'rango/login.html', {'cat_list': cat_list})
 
 @login_required
 def restricted(request):
-    return render(request, 'rango/restricted.html', {'restricted_msg':  "Since you're logged in, you can see this text!" })
+    cat_list = get_category_list()
+    return render(request, 'rango/restricted.html',
+                  {'restricted_msg':
+                   "Since you're logged in, you can see this text!",
+                   'cat_list': cat_list})
 
 # Use the login_required() decorator to ensure only those logged in
 # can access the view.
