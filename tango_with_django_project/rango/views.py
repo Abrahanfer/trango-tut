@@ -329,3 +329,20 @@ def profile(request):
         context_dict['user_picture']=profile_user.picture
 
     return render(request, 'rango/profile.html', context_dict)
+
+def track_url(request):
+    if request.method == 'GET':
+        if 'page_id' in request.GET:
+            pk_page = request.GET['page_id']
+            page_array = Page.objects.filter(pk=pk_page)
+
+            if len(page_array) > 0:
+                page = page_array[0]
+                page.views = page.views + 1
+                page.save()
+
+                return HttpResponseRedirect(page.url)
+        else:
+            return HttpResponseBadRequest
+    else:
+        return HttpResponseNotFound
