@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from datetime import datetime
 from rango.models import Category
-from rango.models import Page
+from rango.models import Page, UserProfile
 from rango.forms import CategoryForm
 from rango.forms import PageForm
 from rango.forms import UserForm, UserProfileForm
@@ -315,3 +315,17 @@ def user_logout(request):
 
     # Take the user back to the homepage.
     return HttpResponseRedirect('/rango/')
+
+@login_required
+def profile(request):
+    user_local = request.user
+    context_dict = {'username': user_local.username, 'email':
+                        user_local.email}
+    profile_user_query=UserProfile.objects.filter(user__username=user_local.username)
+    if len(profile_user_query) > 0:
+        profile_user = profile_user_query[0]
+        context_dict['website']=profile_user.website
+        print(profile_user.picture)
+        context_dict['user_picture']=profile_user.picture
+
+    return render(request, 'rango/profile.html', context_dict)

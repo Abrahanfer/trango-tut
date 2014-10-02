@@ -37,6 +37,7 @@
                {% if user.is_authenticated %}
                <li><a href="{% url 'rango:restricted' %}">Restricted</a></li>
                <li><a href="{% url 'rango:add_category' %}">Add Category</a></li>
+               <li><a href="{% url 'rango:profile' %}">Profile</a></li>
                {% endif %}
                <li><a href="{% url 'rango:about' %}">About</a></li>
              </ul>
