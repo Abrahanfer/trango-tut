@@ -12,12 +12,21 @@ from rango.forms import PageForm
 from rango.forms import UserForm, UserProfileForm
 
 #helper function to get category list
-def get_category_list():
-    category_list = Category.objects.order_by('-likes')
-    for category in category_list:
-        category.url = Category.encode(category.name)
+def get_category_list(max_results=0, starts_with=''):
+    cat_list = []
+    if starts_with:
+        cat_list = Category.objects.filter(name__istartswith=starts_with)
+    else:
+        cat_list = Category.objects.all()
 
-    return category_list
+    if max_results > 0:
+        if len(cat_list) > max_results:
+            cat_list = cat_list[:max_results]
+
+    for cat in cat_list:
+        cat.url = Category.encode(cat.name)
+
+    return cat_list
 
 # Create your views here.
 def index(request):
@@ -363,3 +372,13 @@ def track_url(request):
             return HttpResponseBadRequest
     else:
         return HttpResponseNotFound
+
+def suggest_category(request):
+    cat_list = []
+    starts_with = ''
+    if request.method == 'GET':
+        starts_with = request.GET['suggestion']
+
+    cat_list = get_category_list(8, starts_with)
+
+    return render(request, 'rango/category_list.html', {'cat_list': cat_list })
