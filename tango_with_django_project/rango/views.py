@@ -100,7 +100,7 @@ def category(request, category_name_url):
     # category passed by the user.
     cat_list = get_category_list()
     context_dict = {'category_name': category_name, 'cat_list':
-                    cat_list }
+                    cat_list}
     context_dict['category_name_url'] = category_name_url
     try:
         # Can we find a category with the given name?
@@ -121,6 +121,9 @@ def category(request, category_name_url):
         # context dictionary. We'll use this in the template to verify
         # that the category exists.
         context_dict['category'] = category
+
+        #Adding likes of category to context dictionary
+        context_dict['category_likes'] = category.likes
     except Category.DoesNotExist:
         # We get here if we didn't find the specified category.
         # Don't do anything - the template displays the "no category"
@@ -129,6 +132,20 @@ def category(request, category_name_url):
 
     # Go render the response and return it to the client.
     return render(request, 'rango/category.html', context_dict)
+
+@login_required
+def like_category(request):
+    results = 0
+    if request.method == 'GET':
+        if 'category_id' in request.GET:
+            category_id = request.GET['category_id']
+            category = Category.objects.get(pk=category_id)
+            if category:
+                category.likes = category.likes + 1
+                category.save()
+                results = category.likes
+
+    return HttpResponse(results)
 
 @login_required
 def add_category(request):
